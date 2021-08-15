@@ -95,5 +95,5 @@ Try {
     $RequestOutputStream.Close()
 
     Write-Output "Revert certificate policy"
-    [System.Net.ServicePointManager]::CertificatePolicy = New-Object CustomCertificatePolicy
+    [System.Net.ServicePointManager]::CertificatePolicy = $null
 }
