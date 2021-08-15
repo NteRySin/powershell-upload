@@ -1,5 +1,5 @@
 # PowerShell Upload
- Multipart file upload in PowerShell supporting:
+ Multipart file upload [PowerShell script](powershell-upload.ps1) supporting:
  - Streaming for big files
  - Allow specific server certificate fingerprint
  - Ignore SSL certificate errors (unsafe)
