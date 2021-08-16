@@ -26,7 +26,7 @@ Function Invoke-FileUpload {
             $Fallback = "return true;"
         }
 
-        Add-Type @"
+Add-Type @"
         using System.Net;
         using System.Security.Cryptography.X509Certificates;
         public class CustomCertificatePolicy : ICertificatePolicy {
@@ -35,7 +35,7 @@ Function Invoke-FileUpload {
                 $Fallback
             }
         }
-    "@
+"@
         [System.Net.ServicePointManager]::CertificatePolicy = New-Object CustomCertificatePolicy
     }
 
