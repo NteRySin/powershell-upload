@@ -19,3 +19,6 @@ Upload the file `example.txt` to the endpoint `https://www.example.com/upload` u
     -X509ClientCertificatePassword $(ConvertTo-SecureString -AsPlainText -Force -String "")
 
 It can be tested with the [uploadserver](https://pypi.org/project/uploadserver/) Python module for instance.
+
+## Future plans
+- Send POST parameters
