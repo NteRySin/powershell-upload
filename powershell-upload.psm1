@@ -8,17 +8,17 @@ Function Invoke-FileUpload {
         [Parameter(Mandatory=$false,HelpMessage="Allow specific server certificate fingerprint")][string]$AllowedServerCertificateFingerprint = $null,
         [Parameter(Mandatory=$false,HelpMessage="Ignore SSL certificate errors (unsafe)")][bool]$IgnoreCertificateErrors = $false,
         [Parameter(Mandatory=$false,HelpMessage="X509 client certificate file to use")][string]$X509ClientCertificateFile = $null,
-        [Parameter(Mandatory=$false,HelpMessage="Password for X509 client certificate")][Security.SecureString]$X509ClientCertificatePassword = $(ConvertTo-SecureString -String "" -AsPlainText -Force),
+        [Parameter(Mandatory=$false,HelpMessage="Password for X509 client certificate")][Security.SecureString]$X509ClientCertificatePassword = $null,
         [Parameter(Mandatory=$false,HelpMessage="Timeout in minutes")][int]$TimeoutMinutes = 30
     )
 
     If ($AllowedServerCertificateFingerprint -Or $IgnoreCertificateErrors) {
-        $Condition1 = ""
+        $Condition = ""
         $Fallback = "return false;"
 
         If ($AllowedServerCertificateFingerprint) {
             Write-Output "Allow specific server certificate fingerprint"
-            $Condition1 = "if (x509Certificate.GetCertHashString().Equals(""" + $AllowedServerCertificateFingerprint + """)) { return true; }"
+            $Condition = "if (x509Certificate.GetCertHashString().Equals(""" + $AllowedServerCertificateFingerprint + """)) { return true; }"
         }
 
         If ($IgnoreCertificateErrors) {
@@ -31,7 +31,7 @@ Add-Type @"
         using System.Security.Cryptography.X509Certificates;
         public class CustomCertificatePolicy : ICertificatePolicy {
             public bool CheckValidationResult(ServicePoint servicePoint, X509Certificate x509Certificate, WebRequest webRequest, int certificateProblem) {
-                $Condition1
+                $Condition
                 $Fallback
             }
         }
